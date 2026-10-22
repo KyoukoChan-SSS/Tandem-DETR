@@ -4,6 +4,10 @@ Tandem-DETR extends D-FINE with a backbone stem feature level and bidirectional
 fusion between the stem and P2 features. This release contains the M, L and XL
 models for VisDrone2019-DET.
 
+## Updates
+
+* [2026.10.23] Release Tandem-DETR-M, L and XL for VisDrone2019-DET, with training, evaluation and ONNX export.
+
 ## Results
 
 VisDrone2019-DET val, 800x800, COCO metrics (maxDets=100).
