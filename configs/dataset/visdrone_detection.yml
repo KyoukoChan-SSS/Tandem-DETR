@@ -1,0 +1,44 @@
+# VisDrone2019-DET in COCO format (see tools/dataset/visdrone2coco.py).
+# The ten object classes keep their VisDrone ids 1-10, so the head has 12
+# outputs with indices 0 (ignored regions) and 11 (others) unused.
+
+task: detection
+
+evaluator:
+  type: CocoEvaluator
+  iou_types: ['bbox', ]
+
+num_classes: 12
+remap_mscoco_category: False
+
+train_dataloader:
+  type: DataLoader
+  dataset:
+    type: CocoDetection
+    img_folder: ./dataset/VisDrone2019/DET-train/images
+    ann_file: ./dataset/VisDrone2019/annotations_coco/VisDrone2019-DET_train_coco.json
+    return_masks: False
+    transforms:
+      type: Compose
+      ops: ~
+  shuffle: True
+  num_workers: 10
+  drop_last: True
+  collate_fn:
+    type: BatchImageCollateFunction
+
+val_dataloader:
+  type: DataLoader
+  dataset:
+    type: CocoDetection
+    img_folder: ./dataset/VisDrone2019/DET-val/images
+    ann_file: ./dataset/VisDrone2019/annotations_coco/VisDrone2019-DET_val_coco.json
+    return_masks: False
+    transforms:
+      type: Compose
+      ops: ~
+  shuffle: False
+  num_workers: 10
+  drop_last: False
+  collate_fn:
+    type: BatchImageCollateFunction

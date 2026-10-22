@@ -1,0 +1,22 @@
+print_freq: 100
+output_dir: './output'
+checkpoint_freq: 12
+
+sync_bn: True
+find_unused_parameters: False
+
+use_amp: False
+scaler:
+  type: GradScaler
+  enabled: True
+
+use_ema: True
+ema:
+  type: ModelEMA
+  decay: 0.9999
+  warmups: 1000
+  start: 0
+
+use_wandb: False
+project_name: TandemDETR
+exp_name: baseline

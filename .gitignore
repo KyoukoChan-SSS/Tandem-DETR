@@ -1,0 +1,17 @@
+/output/
+/weight/
+/dataset/
+/logs/
+/checkpoints/
+/wandb/
+/.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+*.onnx
+*.engine
+*.plan

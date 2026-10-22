@@ -1,0 +1,12 @@
+Tandem-DETR
+
+This repository is built on D-FINE (https://github.com/Peterande/D-FINE),
+Copyright (c) 2024 The D-FINE Authors, licensed under the Apache License 2.0.
+D-FINE in turn builds on RT-DETR (https://github.com/lyuwenyu/RT-DETR),
+Copyright (c) 2023 lyuwenyu, licensed under the Apache License 2.0.
+
+Tandem-DETR adds the stem-output backbone, tandem encoder and fusion block,
+VisDrone configurations and conversion, data augmentations, and release tools.
+Configuration loading, decoder anchor batching, training, visualization,
+inference and ONNX export have also been adapted. Upstream copyright notices
+are retained in the source.

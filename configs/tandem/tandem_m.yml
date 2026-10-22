@@ -1,0 +1,50 @@
+# Tandem-DETR-M: HGNetv2-B2 backbone, D-FINE-M widths.
+# VisDrone val 800: AP 39.9 / AP50 62.1 / AP75 42.3 (26.03 M params).
+
+__include__: [
+  '../dataset/visdrone_detection.yml',
+  '../runtime.yml',
+  './include/tandem.yml',
+]
+
+output_dir: ./output/tandem_m
+
+HGNetv2_Stem:
+  name: 'B2'
+  use_lab: True
+
+TandemEncoder:
+  in_channels: [256, 96, 384, 768, 1536]   # [stem_proj, P2, P3, P4, P5]
+  hidden_dim: 256
+  dim_feedforward: 1024
+  depth_mult: 0.67
+
+TandemTransformer:
+  feat_channels: [256, 256, 256, 256, 256]
+  hidden_dim: 256
+  num_layers: 4
+  reg_scale: 4
+
+optimizer:
+  type: AdamW
+  params:
+    -
+      params: '^(?=.*backbone)(?!.*norm|bn).*$'
+      lr: 0.00003
+    -
+      params: '^(?=.*backbone)(?=.*norm|bn).*$'
+      lr: 0.00003
+      weight_decay: 0.
+    -
+      params: '^(?=.*(?:encoder|decoder|stem_proj))(?=.*(?:norm|bn|bias)).*$'
+      weight_decay: 0.
+  lr: 0.0004
+  betas: [0.9, 0.999]
+  weight_decay: 0.000065
+
+train_dataloader:
+  total_batch_size: 4
+  num_workers: 12
+
+val_dataloader:
+  num_workers: 12

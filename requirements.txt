@@ -1,0 +1,14 @@
+torch==2.10.0
+torchvision==0.25.0
+faster-coco-eval==1.7.0
+PyYAML
+tensorboard
+scipy
+calflops
+transformers
+loguru
+matplotlib
+numpy
+Pillow
+opencv-python-headless
+onnxruntime

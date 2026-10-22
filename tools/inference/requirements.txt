@@ -1,0 +1,6 @@
+onnxruntime
+tensorrt
+openvino
+opencv-python-headless
+Pillow
+numpy
