@@ -6,6 +6,7 @@ models for VisDrone2019-DET.
 
 ## Updates
 
+* [2026.10.29] Release weights for Tandem-DETR-M, L, XL and StemFusion, with eval logs and TensorRT engines for T4 and A40 ([v1.0](https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/tag/v1.0)).
 * [2026.10.23] Release Tandem-DETR-M, L and XL for VisDrone2019-DET, with training, evaluation and ONNX export.
 
 ## Results
@@ -14,10 +15,10 @@ VisDrone2019-DET val, 800x800, COCO metrics (maxDets=100).
 
 | Model | Backbone | Params | AP | AP50 | AP75 | AP_S | AP_M | AP_L |
 |---|---|---|---|---|---|---|---|---|
-| StemFusion | HGNetv2-B2 | 23.9M | 38.8 | 60.8 | 41.0 | 30.5 | 49.4 | 56.6 |
-| Tandem-DETR-M | HGNetv2-B2 | 26.0M | 39.9 | 62.1 | 42.3 | 31.3 | 50.8 | 62.5 |
-| Tandem-DETR-L | HGNetv2-B4 | 38.5M | 40.4 | 63.0 | 42.9 | 32.5 | 51.5 | 59.8 |
-| Tandem-DETR-XL | HGNetv2-B5 | 79.0M | 41.3 | 63.9 | 44.1 | 32.9 | 52.3 | 59.5 |
+| StemFusion | HGNetv2-B2 | 23.9M | [38.8][stemfusion_visdrone.pth] | 60.8 | 41.0 | 30.5 | 49.4 | 56.6 |
+| Tandem-DETR-M | HGNetv2-B2 | 26.0M | [39.9][tandem_detr_m_visdrone.pth] | 62.1 | 42.3 | 31.3 | 50.8 | 62.5 |
+| Tandem-DETR-L | HGNetv2-B4 | 38.5M | [40.4][tandem_detr_l_visdrone.pth] | 63.0 | 42.9 | 32.5 | 51.5 | 59.8 |
+| Tandem-DETR-XL | HGNetv2-B5 | 79.0M | [41.3][tandem_detr_x_visdrone.pth] | 63.9 | 44.1 | 32.9 | 52.3 | 59.5 |
 
 Params are counted after `deploy()`.
 
@@ -27,14 +28,14 @@ TensorRT 10.13.2.6, FP16, 800x800, batch 1. Latency in ms (mean ± std).
 
 | Model | Params | AP | TRT AP (T4) | T4 | TRT AP (A40) | A40 |
 |---|---|---|---|---|---|---|
-| Dome-DETR-M | 23.9M | 38.1 | 37.8 | 35.9 ± 1.0 | 37.8 | 13.85 ± 0.07 |
-| Dome-DETR-M + stem | 27.9M | 38.9 | 38.6 | 53.5 ± 0.8 | 38.7 | 20.52 ± 0.09 |
-| **StemFusion** | **23.9M** | **38.8** | **38.5** | **27.8 ± 0.4** | **38.5** | **9.85 ± 0.03** |
-| **Tandem-DETR-M** | **26.0M** | **39.9** | **39.6** | **32.3 ± 0.4** | **39.6** | **11.20 ± 0.03** |
-| Dome-DETR-L | 36.0M | 38.2 | 37.7 | 30.5 ± 0.5 | 37.7 | 13.78 ± 0.08 |
-| Dome-DETR-L + stem | 40.7M | 39.6 | 39.3 | 60.7 ± 4.3 | 39.3 | 22.70 ± 0.08 |
-| **Tandem-DETR-L** | **38.5M** | **40.4** | **40.2** | **37.3 ± 0.5** | **40.3** | **12.86 ± 0.04** |
-| **Tandem-DETR-XL** | **79.0M** | **41.3** | **41.1** | **74.6 ± 1.4** | **41.2** | **22.83 ± 0.19** |
+| Dome-DETR-M | 23.9M | 38.1 | [37.8][dome_detr_m.t4.ap.json] | [35.9 ± 1.0][dome_detr_m.t4.fp16.engine] | [37.8][dome_detr_m.a40.ap.json] | [13.85 ± 0.07][dome_detr_m.a40.fp16.engine] |
+| Dome-DETR-M + stem | 27.9M | 38.9 | [38.6][dome_detr_m_stem.t4.ap.json] | [53.5 ± 0.8][dome_detr_m_stem.t4.fp16.engine] | [38.7][dome_detr_m_stem.a40.ap.json] | [20.52 ± 0.09][dome_detr_m_stem.a40.fp16.engine] |
+| **StemFusion** | **23.9M** | **38.8** | **[38.5][stemfusion.t4.ap.json]** | **[27.8 ± 0.4][stemfusion.t4.fp16.engine]** | **[38.5][stemfusion.a40.ap.json]** | **[9.85 ± 0.03][stemfusion.a40.fp16.engine]** |
+| **Tandem-DETR-M** | **26.0M** | **39.9** | **[39.6][tandem_detr_m.t4.ap.json]** | **[32.3 ± 0.4][tandem_detr_m.t4.fp16.engine]** | **[39.6][tandem_detr_m.a40.ap.json]** | **[11.20 ± 0.03][tandem_detr_m.a40.fp16.engine]** |
+| Dome-DETR-L | 36.0M | 38.2 | [37.7][dome_detr_l.t4.ap.json] | [30.5 ± 0.5][dome_detr_l.t4.fp16.engine] | [37.7][dome_detr_l.a40.ap.json] | [13.78 ± 0.08][dome_detr_l.a40.fp16.engine] |
+| Dome-DETR-L + stem | 40.7M | 39.6 | [39.3][dome_detr_l_stem.t4.ap.json] | [60.7 ± 4.3][dome_detr_l_stem.t4.fp16.engine] | [39.3][dome_detr_l_stem.a40.ap.json] | [22.70 ± 0.08][dome_detr_l_stem.a40.fp16.engine] |
+| **Tandem-DETR-L** | **38.5M** | **40.4** | **[40.2][tandem_detr_l.t4.ap.json]** | **[37.3 ± 0.5][tandem_detr_l.t4.fp16.engine]** | **[40.3][tandem_detr_l.a40.ap.json]** | **[12.86 ± 0.04][tandem_detr_l.a40.fp16.engine]** |
+| **Tandem-DETR-XL** | **79.0M** | **41.3** | **[41.1][tandem_detr_x.t4.ap.json]** | **[74.6 ± 1.4][tandem_detr_x.t4.fp16.engine]** | **[41.2][tandem_detr_x.a40.ap.json]** | **[22.83 ± 0.19][tandem_detr_x.a40.fp16.engine]** |
 
 Dome-DETR-M keeps its window attention in FP32.
 The XL engines keep 76 numerically sensitive layers in FP32.
@@ -138,3 +139,40 @@ This work builds on [D-FINE](https://github.com/Peterande/D-FINE),
 ## License
 
 Apache-2.0, see `LICENSE` and `NOTICE`.
+
+[stemfusion_visdrone.pth]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/stemfusion_visdrone.pth
+[tandem_detr_m_visdrone.pth]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/tandem_detr_m_visdrone.pth
+[tandem_detr_l_visdrone.pth]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/tandem_detr_l_visdrone.pth
+[tandem_detr_x_visdrone.pth]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/tandem_detr_x_visdrone.pth
+[dome_detr_m.t4.ap.json]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/dome_detr_m.t4.ap.json
+[dome_detr_m.t4.fp16.engine]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/dome_detr_m.t4.fp16.engine
+[dome_detr_m.a40.ap.json]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/dome_detr_m.a40.ap.json
+[dome_detr_m.a40.fp16.engine]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/dome_detr_m.a40.fp16.engine
+[dome_detr_m_stem.t4.ap.json]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/dome_detr_m_stem.t4.ap.json
+[dome_detr_m_stem.t4.fp16.engine]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/dome_detr_m_stem.t4.fp16.engine
+[dome_detr_m_stem.a40.ap.json]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/dome_detr_m_stem.a40.ap.json
+[dome_detr_m_stem.a40.fp16.engine]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/dome_detr_m_stem.a40.fp16.engine
+[stemfusion.t4.ap.json]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/stemfusion.t4.ap.json
+[stemfusion.t4.fp16.engine]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/stemfusion.t4.fp16.engine
+[stemfusion.a40.ap.json]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/stemfusion.a40.ap.json
+[stemfusion.a40.fp16.engine]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/stemfusion.a40.fp16.engine
+[tandem_detr_m.t4.ap.json]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/tandem_detr_m.t4.ap.json
+[tandem_detr_m.t4.fp16.engine]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/tandem_detr_m.t4.fp16.engine
+[tandem_detr_m.a40.ap.json]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/tandem_detr_m.a40.ap.json
+[tandem_detr_m.a40.fp16.engine]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/tandem_detr_m.a40.fp16.engine
+[dome_detr_l.t4.ap.json]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/dome_detr_l.t4.ap.json
+[dome_detr_l.t4.fp16.engine]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/dome_detr_l.t4.fp16.engine
+[dome_detr_l.a40.ap.json]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/dome_detr_l.a40.ap.json
+[dome_detr_l.a40.fp16.engine]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/dome_detr_l.a40.fp16.engine
+[dome_detr_l_stem.t4.ap.json]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/dome_detr_l_stem.t4.ap.json
+[dome_detr_l_stem.t4.fp16.engine]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/dome_detr_l_stem.t4.fp16.engine
+[dome_detr_l_stem.a40.ap.json]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/dome_detr_l_stem.a40.ap.json
+[dome_detr_l_stem.a40.fp16.engine]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/dome_detr_l_stem.a40.fp16.engine
+[tandem_detr_l.t4.ap.json]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/tandem_detr_l.t4.ap.json
+[tandem_detr_l.t4.fp16.engine]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/tandem_detr_l.t4.fp16.engine
+[tandem_detr_l.a40.ap.json]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/tandem_detr_l.a40.ap.json
+[tandem_detr_l.a40.fp16.engine]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/tandem_detr_l.a40.fp16.engine
+[tandem_detr_x.t4.ap.json]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/tandem_detr_x.t4.ap.json
+[tandem_detr_x.t4.fp16.engine]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/tandem_detr_x.t4.fp16.engine
+[tandem_detr_x.a40.ap.json]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/tandem_detr_x.a40.ap.json
+[tandem_detr_x.a40.fp16.engine]: https://github.com/KyoukoChan-SSS/Tandem-DETR/releases/download/v1.0/tandem_detr_x.a40.fp16.engine
