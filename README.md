@@ -14,11 +14,35 @@ VisDrone2019-DET val, 800x800, COCO metrics (maxDets=100).
 
 | Model | Backbone | Params | AP | AP50 | AP75 | AP_S | AP_M | AP_L |
 |---|---|---|---|---|---|---|---|---|
+| StemFusion | HGNetv2-B2 | 23.9M | 38.8 | 60.8 | 41.0 | 30.5 | 49.4 | 56.6 |
 | Tandem-DETR-M | HGNetv2-B2 | 26.0M | 39.9 | 62.1 | 42.3 | 31.3 | 50.8 | 62.5 |
 | Tandem-DETR-L | HGNetv2-B4 | 38.5M | 40.4 | 63.0 | 42.9 | 32.5 | 51.5 | 59.8 |
 | Tandem-DETR-XL | HGNetv2-B5 | 79.0M | 41.3 | 63.9 | 44.1 | 32.9 | 52.3 | 59.5 |
 
 Params are counted after `deploy()`.
+
+## Latency
+
+TensorRT 10.13.2.6, FP16, 800x800, batch 1. Latency in ms (mean ± std).
+
+| Model | Params | AP | TRT AP (T4) | T4 | TRT AP (A40) | A40 |
+|---|---|---|---|---|---|---|
+| Dome-DETR-M | 23.9M | 38.1 | 37.8 | 35.9 ± 1.0 | 37.8 | 13.85 ± 0.07 |
+| Dome-DETR-M + stem | 27.9M | 38.9 | 38.6 | 53.5 ± 0.8 | 38.7 | 20.52 ± 0.09 |
+| **StemFusion** | **23.9M** | **38.8** | **38.5** | **27.8 ± 0.4** | **38.5** | **9.85 ± 0.03** |
+| **Tandem-DETR-M** | **26.0M** | **39.9** | **39.6** | **32.3 ± 0.4** | **39.6** | **11.20 ± 0.03** |
+| Dome-DETR-L | 36.0M | 38.2 | 37.7 | 30.5 ± 0.5 | 37.7 | 13.78 ± 0.08 |
+| Dome-DETR-L + stem | 40.7M | 39.6 | 39.3 | 60.7 ± 4.3 | 39.3 | 22.70 ± 0.08 |
+| **Tandem-DETR-L** | **38.5M** | **40.4** | **40.2** | **37.3 ± 0.5** | **40.3** | **12.86 ± 0.04** |
+| **Tandem-DETR-XL** | **79.0M** | **41.3** | **41.1** | **74.6 ± 1.4** | **41.2** | **22.83 ± 0.19** |
+
+Dome-DETR-M keeps its window attention in FP32.
+The XL engines keep 76 numerically sensitive layers in FP32.
+
+The Tandem-DETR engines were built from ONNX graphs
+exported with a rewrite that is not part of this release. Engines built from
+`tools/deployment/export_onnx.py` run at about 39 / 44 / 82 ms (M / L / XL)
+on T4.
 
 ## Setup
 
